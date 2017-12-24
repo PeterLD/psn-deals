@@ -5,7 +5,9 @@ setup(
     version='1.0',
     py_modules=['psn-sales'],
     install_requires=[
-        'click'
+        'bs4',
+        'click',
+        'requests'
     ],
     entry_points='''
         [console_scripts]
