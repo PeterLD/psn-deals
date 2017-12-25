@@ -7,7 +7,8 @@ setup(
     install_requires=[
         'bs4',
         'click',
-        'requests'
+        'requests',
+        'tabulate'
     ],
     entry_points='''
         [console_scripts]
