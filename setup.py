@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name='psn-sales',
-    version='1.0',
-    py_modules=['psn-sales'],
+    name='psn-sale',
+    version='0.1dev',
+    py_modules=['psn-sale'],
     install_requires=[
         'bs4',
         'click',
@@ -12,6 +12,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        psn-sales=psn_sales:cli
+        psn-sale=psn_sale:cli
     '''
 )

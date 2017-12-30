@@ -9,9 +9,7 @@ def cli():
     pass
 
 @cli.command()
-@click.option('--delimiter', default='\t', help='Delimiter to be used for output values.')
-@click.option('--out', type=click.File('w'), default='-', help='File to output values to.')
-def current(delimiter, out):
+def list():
     """Retrieves any currently running sales."""
     sales = []
 
