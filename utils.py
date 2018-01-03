@@ -1,8 +1,19 @@
 import html
 import requests
 from bs4 import BeautifulSoup
+from tabulate import tabulate
 
 PSN_HOME = 'https://store.playstation.com'
+
+TABLE_FORMAT = 'table'
+CSV_FORMAT = 'csv'
+TSV_FORMAT = 'tsv'
+
+OUTPUT_FORMATS = [TABLE_FORMAT, CSV_FORMAT, TSV_FORMAT]
+DELIMITER = {
+    CSV_FORMAT: ',',
+    TSV_FORMAT: '\t'
+}
 
 def current_sales():
     DEALS_HOME = PSN_HOME + '/en-us/grid/STORE-MSF77008-WEEKLYDEALS'
@@ -58,3 +69,16 @@ def parse_grid(url):
             url = None
 
     return grid_cells
+
+def format_output(values, headers=[], format=TABLE_FORMAT):
+    if format == TABLE_FORMAT:
+        return tabulate(values, headers=headers)
+    else:
+        output = values
+
+        if len(headers):
+            output = [headers] + output
+
+        output = list(map(lambda x: DELIMITER[format].join(x), output))
+
+        return '\n'.join(output)
