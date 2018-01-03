@@ -1,18 +1,17 @@
-import html
+import csv, html
 import requests
 from bs4 import BeautifulSoup
 from tabulate import tabulate
+from io import StringIO
 
 PSN_HOME = 'https://store.playstation.com'
 
 TABLE_FORMAT = 'table'
 CSV_FORMAT = 'csv'
-TSV_FORMAT = 'tsv'
 
-OUTPUT_FORMATS = [TABLE_FORMAT, CSV_FORMAT, TSV_FORMAT]
+OUTPUT_FORMATS = [TABLE_FORMAT, CSV_FORMAT]
 DELIMITER = {
-    CSV_FORMAT: ',',
-    TSV_FORMAT: '\t'
+    CSV_FORMAT: ','
 }
 
 def current_sales():
@@ -70,15 +69,16 @@ def parse_grid(url):
 
     return grid_cells
 
-def format_output(values, headers=[], format=TABLE_FORMAT):
+def format_output(values, headers=None, format=TABLE_FORMAT):
     if format == TABLE_FORMAT:
         return tabulate(values, headers=headers)
     else:
-        output = values
+        output_values = values
 
-        if len(headers):
-            output = [headers] + output
+        if headers:
+            output_values = [headers] + output_values
 
-        output = list(map(lambda x: DELIMITER[format].join(x), output))
+        buffer = StringIO()
+        csv.writer(buffer).writerows(output_values)
 
-        return '\n'.join(output)
+        return buffer.getvalue()
